@@ -21,9 +21,9 @@ resized_files = os.listdir(resized_folder)
 
 
 for original_file in original_files:
-    original_number = original_file.split(".")[0]  # Extract the number from the filename
+    original_number = original_file.split(".")[0] 
     for resized_file in resized_files:
-        resized_number = resized_file.split(".")[0]  # Extract the number from the filename
+        resized_number = resized_file.split(".")[0]  
         if original_number == resized_number:
             original_path = os.path.join(original_folder, original_file)
             resized_path = os.path.join(resized_folder, resized_file)
