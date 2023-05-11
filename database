@@ -1,0 +1,37 @@
+import sqlite3
+import os
+
+# Connect to the SQLite database
+conn = sqlite3.connect('photos.db')
+cursor = conn.cursor()
+
+# Create the table to store photo data
+cursor.execute('''CREATE TABLE IF NOT EXISTS photos
+                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   original_path TEXT,
+                   resized_path TEXT)''')
+
+# Folder paths for original and resized photos
+original_folder = r"D:\kursova\original"
+resized_folder = r"D:\kursova\reduced"
+
+# Get the list of files in both folders
+original_files = os.listdir(original_folder)
+resized_files = os.listdir(resized_folder)
+
+
+# Match the photos by number and insert into the database
+for original_file in original_files:
+    original_number = original_file.split(".")[0]  # Extract the number from the filename
+    for resized_file in resized_files:
+        resized_number = resized_file.split(".")[0]  # Extract the number from the filename
+        if original_number == resized_number:
+            original_path = os.path.join(original_folder, original_file)
+            resized_path = os.path.join(resized_folder, resized_file)
+            cursor.execute('''INSERT INTO photos (original_path, resized_path)
+                              VALUES (?, ?)''', (original_path, resized_path))
+            break  # Stop searching for a match once found
+
+# Commit the changes and close the connection
+conn.commit()
+conn.close()
