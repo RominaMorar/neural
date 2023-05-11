@@ -29,7 +29,7 @@ for original_file in original_files:
             resized_path = os.path.join(resized_folder, resized_file)
             cursor.execute('''INSERT INTO photos (original_path, resized_path)
                               VALUES (?, ?)''', (original_path, resized_path))
-            break  # Stop searching for a match once found
+            break  
 
 
 conn.commit()
